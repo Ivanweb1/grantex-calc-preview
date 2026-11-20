@@ -1,0 +1,226 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор — превью</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;font-family:Montserrat,sans-serif}.note{background:#072245;color:#fff;font-size:13px;padding:10px 16px;text-align:center}</style>
+<style>
+	.gxc{--gxc-accent:#065CA7;--gxc-dark:#072245;--gxc-text:#334155;--gxc-muted:#64748B;--gxc-bg:#F2F2F2;--gxc-line:#E2E8F0;font-family:Montserrat,sans-serif;color:var(--gxc-text);max-width:1200px;margin:0 auto;padding:60px 16px}
+	.gxc *{box-sizing:border-box}
+	.gxc .gxc__head{max-width:720px;margin-bottom:32px}
+	.gxc .gxc__title{font-family:Montserrat,sans-serif;font-size:35px;font-weight:400;line-height:1.2;color:var(--gxc-dark);margin:0 0 12px}
+	.gxc .gxc__sub{font-size:15px;line-height:1.6;margin:0;color:var(--gxc-muted)}
+	.gxc .gxc__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+	.gxc .gxc__params{background:var(--gxc-bg);border-radius:5px;padding:32px}
+	.gxc .gxc__group{border:0;margin:0 0 22px;padding:0;min-width:0}
+	.gxc .gxc__group:last-of-type{margin-bottom:18px}
+	.gxc .gxc__group--main{margin-bottom:32px}
+	.gxc .gxc__legend,.gxc .gxc__extra-title{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:600;color:var(--gxc-dark);margin:0 0 16px;padding:0;line-height:1.3}
+	.gxc .gxc__extra-title{flex-wrap:wrap;padding-top:28px;border-top:1px solid #DCE3EC}
+	.gxc .gxc__extra-title small{flex-basis:100%;margin-left:40px;margin-top:-8px;font-size:13px;font-weight:400;color:var(--gxc-muted)}
+	.gxc .gxc__num{flex:0 0 28px;height:28px;border-radius:50%;border:2px solid var(--gxc-accent);color:var(--gxc-accent);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:600}
+	.gxc .gxc__label{font-size:13px;font-weight:500;color:var(--gxc-dark);margin:0 0 8px;padding:0}
+	.gxc .gxc__chips{display:flex;flex-wrap:wrap;gap:8px}
+	.gxc .gxc__chips--dist{display:grid;grid-template-columns:repeat(3,1fr)}
+	.gxc .gxc__chip{position:relative;cursor:pointer;margin:0}
+	.gxc .gxc__chip input,.gxc .gxc__check input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+	.gxc .gxc__chip span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:52px;padding:10px 14px;background:#fff;border:1px solid var(--gxc-line);border-radius:5px;font-size:15px;font-weight:500;color:var(--gxc-dark);line-height:1.3;transition:border-color .15s,background .15s,color .15s}
+	.gxc .gxc__chip--sm span{min-height:40px;padding:8px 14px;font-size:13px;font-weight:400}
+	.gxc .gxc__chip:hover span{border-color:var(--gxc-accent)}
+	.gxc .gxc__chip input:checked+span{background:var(--gxc-accent);border-color:var(--gxc-accent);color:#fff}
+	.gxc .gxc__chip input:focus-visible+span,.gxc .gxc__check input:focus-visible+span::before{outline:2px solid var(--gxc-accent);outline-offset:2px}
+	.gxc .gxc__check{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:var(--gxc-dark);margin:0;position:relative}
+	.gxc .gxc__check span{display:flex;align-items:center;gap:10px}
+	.gxc .gxc__check span::before{content:"";flex:0 0 22px;height:22px;border-radius:4px;border:1px solid #CBD5E1;background:#fff center/14px no-repeat;transition:background-color .15s,border-color .15s}
+	.gxc .gxc__check input:checked+span::before{background-color:var(--gxc-accent);border-color:var(--gxc-accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+	.gxc .gxc__side{display:flex;flex-direction:column;gap:16px;position:sticky;top:110px}
+	.gxc .gxc__result{background:var(--gxc-dark);color:#fff;border-radius:5px;padding:28px}
+	.gxc .gxc__rlabel{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#9FB6D3}
+	.gxc .gxc__price-wrap{display:flex;flex-direction:column}
+	.gxc .gxc__from{font-size:15px;color:#C9D6E6}
+	.gxc .gxc__price{font-size:40px;font-weight:600;line-height:1.15;color:#fff;white-space:nowrap}
+	.gxc .gxc__price--text{display:block;font-size:24px;white-space:normal}
+	.gxc .gxc__inote{margin:10px 0 0;font-size:14px;line-height:1.55;color:#C9D6E6}
+	.gxc .gxc__price-wrap[hidden],.gxc .gxc__individual[hidden]{display:none}
+	.gxc .gxc__facts{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.15)}
+	.gxc .gxc__facts li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:14px}
+	.gxc .gxc__facts span{color:#9FB6D3}
+	.gxc .gxc__facts strong{font-weight:500;color:#fff;text-align:right}
+	.gxc .gxc__disclaimer{margin:16px 0 0;font-size:12px;line-height:1.55;color:#9FB6D3}
+	.gxc .gxc__form{background:#fff;border:1px solid var(--gxc-line);border-radius:5px;padding:24px 28px 28px}
+	.gxc .gxc__ftitle{margin:0 0 4px;font-size:18px;font-weight:600;color:var(--gxc-dark)}
+	.gxc .gxc__flead{margin:0 0 18px;font-size:13px;color:var(--gxc-muted)}
+	.gxc .gxc__warn{margin:0;padding:12px;background:#FEF3C7;border-radius:5px;font-size:13px}
+	/* Форма CF7 внутри калькулятора */
+	.gxc .wpcf7 form>p,.gxc .wpcf7 form label{margin:0}
+	.gxc .wpcf7 form{display:flex;flex-direction:column;gap:12px}
+	.gxc .wpcf7 form[hidden]{display:none}
+	.gxc .wpcf7 br{display:none}
+	.gxc .wpcf7 input[type=text],.gxc .wpcf7 input[type=tel],.gxc .wpcf7 input[type=email]{width:100%;border:1px solid #CBD5E1;border-radius:5px;padding:13px 14px;font:14px Montserrat,sans-serif;color:var(--gxc-dark);background:#fff;transition:border-color .2s;margin:0}
+	.gxc .wpcf7 input:focus{outline:none;border-color:var(--gxc-accent)}
+	.gxc .wpcf7 .wpcf7-list-item{margin:0}
+	.gxc .wpcf7 .wpcf7-acceptance label,.gxc .wpcf7 .wpcf7-checkbox label{display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.5;color:var(--gxc-muted)}
+	.gxc .wpcf7 .wpcf7-acceptance input,.gxc .wpcf7 .wpcf7-checkbox input{margin-top:3px}
+	.gxc .wpcf7 a{color:var(--gxc-accent)}
+	.gxc .wpcf7 input[type=submit]{width:100%;background:var(--gxc-accent);color:#fff;border:0;border-radius:5px;padding:15px 24px;font:500 14px Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;transition:background .2s}
+	.gxc .wpcf7 input[type=submit]:hover{background:var(--gxc-dark)}
+	.gxc .wpcf7 .wpcf7-spinner{display:none}
+	.gxc .wpcf7 form.submitting input[type=submit]{opacity:.6;cursor:wait}
+	.gxc .wpcf7-not-valid-tip{font-size:12px;margin-top:4px}
+	.gxc .wpcf7 form .wpcf7-response-output{margin:4px 0 0;padding:10px 12px;font-size:13px;border-radius:5px}
+	.gxc .gxc__done{text-align:center;padding:8px 0}
+	.gxc .gxc__done strong{display:block;font-size:18px;color:var(--gxc-dark);margin-bottom:6px}
+	.gxc .gxc__done p{margin:0 0 16px;font-size:14px;color:var(--gxc-muted)}
+	.gxc .gxc__again{background:none;border:0;padding:0;color:var(--gxc-accent);font:500 13px Montserrat,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+	/* Узкие экраны: цена сразу под выбором расстояния, вопросы об объекте и форма — ниже. */
+	@media (max-width:1024px){
+		.gxc .gxc__grid{display:flex;flex-direction:column;gap:16px}
+		.gxc .gxc__params,.gxc .gxc__side{display:contents}
+		.gxc .gxc__group--main,.gxc .gxc__extra{background:var(--gxc-bg);border-radius:5px;padding:28px}
+		.gxc .gxc__group--main{order:1;margin:0}
+		.gxc .gxc__group--main .gxc__legend{float:left;width:100%}
+		.gxc .gxc__group--main .gxc__chips{clear:both}
+		.gxc .gxc__result{order:2}
+		.gxc .gxc__extra{order:3}
+		.gxc .gxc__extra-title{padding-top:0;border-top:0}
+		.gxc .gxc__form{order:4}
+	}
+	@media (max-width:767px){
+		.gxc{padding:40px 16px}
+		.gxc .gxc__title{font-size:26px}
+		.gxc .gxc__group--main,.gxc .gxc__extra{padding:22px 16px}
+		.gxc .gxc__chips--dist{grid-template-columns:repeat(2,1fr)}
+		.gxc .gxc__chip span{font-size:14px;min-height:48px}
+		.gxc .gxc__result{padding:24px 20px}
+		.gxc .gxc__price{font-size:34px}
+		.gxc .gxc__form{padding:22px 16px}
+		.gxc .wpcf7 input[type=text],.gxc .wpcf7 input[type=tel],.gxc .wpcf7 input[type=email]{font-size:16px}
+	}
+	</style></head><body>
+<div class="note">Превью калькулятора газификации. Отправка формы имитируется.</div>
+<!--gxc:start-->
+	<section class="gxc" id="gxc-demo" data-ranges="[{&quot;id&quot;: &quot;10&quot;, &quot;label&quot;: &quot;до 10 м&quot;, &quot;price&quot;: 260000}, {&quot;id&quot;: &quot;20&quot;, &quot;label&quot;: &quot;до 20 м&quot;, &quot;price&quot;: 280000}, {&quot;id&quot;: &quot;30&quot;, &quot;label&quot;: &quot;до 30 м&quot;, &quot;price&quot;: 290000}, {&quot;id&quot;: &quot;40&quot;, &quot;label&quot;: &quot;до 40 м&quot;, &quot;price&quot;: 300000}, {&quot;id&quot;: &quot;50&quot;, &quot;label&quot;: &quot;до 50 м&quot;, &quot;price&quot;: 300000}, {&quot;id&quot;: &quot;50+&quot;, &quot;label&quot;: &quot;больше 50 м&quot;, &quot;price&quot;: 0}]">
+		<div class="gxc__head">
+			<h2 class="gxc__title">Калькулятор стоимости газификации</h2>
+			<p class="gxc__sub">Выберите расстояние от газовой трубы до дома — и сразу увидите ориентировочную стоимость стандартного пакета работ.</p>
+		</div>
+
+		<div class="gxc__grid">
+			<div class="gxc__params">
+				<fieldset class="gxc__group gxc__group--main">
+					<legend class="gxc__legend"><span class="gxc__num">1</span>Расстояние от трубы до ввода в дом</legend>
+					<div class="gxc__chips gxc__chips--dist">
+						<label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="10" data-key="distance" checked><span>до 10 м</span></label><label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="20" data-key="distance"><span>до 20 м</span></label><label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="30" data-key="distance"><span>до 30 м</span></label><label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="40" data-key="distance"><span>до 40 м</span></label><label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="50" data-key="distance"><span>до 50 м</span></label><label class="gxc__chip"><input type="radio" name="gxc-demo-dist" value="50+" data-key="distance"><span>больше 50 м</span></label>
+					</div>
+				</fieldset>
+
+				<div class="gxc__extra">
+					<p class="gxc__extra-title"><span class="gxc__num">2</span>Об объекте <small>необязательно, на стоимость не влияет</small></p>
+					<fieldset class="gxc__group"><legend class="gxc__label">Где находится дом</legend><div class="gxc__chips"><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-region" value="Ленинградская область" data-key="region"><span>Ленинградская область</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-region" value="Санкт-Петербург" data-key="region"><span>Санкт-Петербург</span></label></div></fieldset><fieldset class="gxc__group"><legend class="gxc__label">Газовая труба рядом с участком</legend><div class="gxc__chips"><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-pipe" value="Есть" data-key="pipe"><span>Есть</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-pipe" value="Нет" data-key="pipe"><span>Нет</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-pipe" value="Не знаю" data-key="pipe"><span>Не знаю</span></label></div></fieldset><fieldset class="gxc__group"><legend class="gxc__label">Статус земли и дома</legend><div class="gxc__chips"><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-land" value="Земли населённых пунктов" data-key="land"><span>Земли населённых пунктов</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-land" value="ИЖС" data-key="land"><span>ИЖС</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-land" value="ЛПХ" data-key="land"><span>ЛПХ</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-land" value="СНТ / ОНТ в газифицированном населённом пункте" data-key="land"><span>СНТ / ОНТ в газифицированном населённом пункте</span></label><label class="gxc__chip gxc__chip--sm"><input type="radio" name="gxc-demo-land" value="Жилой дом, право собственности в ЕГРН" data-key="land"><span>Жилой дом, право собственности в ЕГРН</span></label></div></fieldset>
+					<label class="gxc__check">
+						<input type="checkbox" data-key="tu">
+						<span>Технические условия (ТУ) уже получены</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="gxc__side">
+				<div class="gxc__result" aria-live="polite">
+					<p class="gxc__rlabel">Предварительная стоимость</p>
+					<div class="gxc__price-wrap">
+						<span class="gxc__from">ориентировочно от</span>
+						<span class="gxc__price">260 000 ₽</span>
+					</div>
+					<div class="gxc__individual" hidden>
+						<span class="gxc__price gxc__price--text">Требуется индивидуальный расчёт</span>
+						<p class="gxc__inote">При расстоянии больше 50 м стоимость считаем отдельно. Оставьте заявку — специалист свяжется с вами и рассчитает.</p>
+					</div>
+					<ul class="gxc__facts">
+						<li><span>Пакет</span><strong>стандартный</strong></li>
+						<li><span>Расстояние</span><strong class="gxc__fdist">до 10 м</strong></li>
+						<li><span>Срок</span><strong class="gxc__fterm">4–6 месяцев</strong></li>
+					</ul>
+					<p class="gxc__disclaimer">Сумма предварительная: она может измениться после уточнения характеристик участка и состава работ. Пакет «под ключ» рассчитывается отдельно — специалист расскажет о разнице на консультации.</p>
+				</div>
+
+				<div class="gxc__form">
+					<p class="gxc__ftitle">Отправить расчёт специалисту</p>
+					<p class="gxc__flead">Перезвоним, уточним детали и назовём точную стоимость.</p>
+					<div class="wpcf7"><form class="wpcf7-form gxc-cf7" novalidate><input type="hidden" name="calc-service" value=""><input type="hidden" name="calc-distance" value=""><input type="hidden" name="calc-price" value=""><input type="hidden" name="calc-term" value=""><input type="hidden" name="calc-region" value=""><input type="hidden" name="calc-pipe" value=""><input type="hidden" name="calc-land" value=""><input type="hidden" name="calc-tu" value=""><p><input type="text" name="NAME" placeholder="Имя *" required></p><p><input type="tel" name="PHONE" placeholder="Телефон *" required></p><p><input type="email" name="EMAIL" placeholder="E-mail — пришлём расчёт на почту"></p><p><span class="wpcf7-form-control wpcf7-checkbox"><span class="wpcf7-list-item"><label><input type="checkbox" name="your-consent" value="1" required><span>Я согласен на <a href="https://grant-x.ru/soglasie-na-obrabotku-personalnyh-dannyh/" target="_blank">обработку персональных данных</a> и принимаю <a href="https://grant-x.ru/politika-konfidenczialnosti/" target="_blank">политику конфиденциальности</a></span></label></span></span></p><p><input type="submit" value="Отправить расчёт"></p><div class="wpcf7-response-output" aria-hidden="true" hidden></div></form></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+<script>
+document.querySelectorAll('.gxc .wpcf7 form').forEach(function(f){
+  var out=f.querySelector('.wpcf7-response-output');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=[].some.call(f.querySelectorAll('[required]'),function(i){return i.type==='checkbox'?!i.checked:!i.value.trim();});
+    if(bad){out.hidden=false;out.style.border='1px solid #F59E0B';out.textContent='Заполните имя, телефон и отметьте согласие.';return;}
+    out.hidden=true;
+    var data={};new FormData(f).forEach(function(v,k){if(k.indexOf('calc-')===0)data[k]=v;});
+    console.log('Ушло бы в CF7 / Битрикс24:',data);
+    window.__lastCalcSubmit=data;
+    f.classList.add('submitting');
+    setTimeout(function(){f.classList.remove('submitting');f.closest('.wpcf7').dispatchEvent(new Event('wpcf7mailsent'));f.reset();f.closest('.wpcf7').dispatchEvent(new Event('wpcf7reset'));},700);
+  });
+});
+</script>
+<script>
+	(function(){
+		function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' ₽';}
+		function init(root){
+			if(root.dataset.ready)return;root.dataset.ready='1';
+			var ranges=JSON.parse(root.dataset.ranges||'[]'),
+				q=function(s){return root.querySelector(s);},
+				priceWrap=q('.gxc__price-wrap'),price=q('.gxc__price'),indiv=q('.gxc__individual'),
+				fDist=q('.gxc__fdist'),fTerm=q('.gxc__fterm');
+			function state(){
+				var s={distance:'',region:'',pipe:'',land:'',tu:''};
+				root.querySelectorAll('[data-key]').forEach(function(i){
+					if(i.type==='checkbox')s[i.dataset.key]=i.checked?'Да':'Нет';
+					else if(i.checked)s[i.dataset.key]=i.value;
+				});
+				return s;
+			}
+			function range(id){for(var i=0;i<ranges.length;i++)if(ranges[i].id===id)return ranges[i];return ranges[0];}
+			function term(region){return region==='Ленинградская область'?'около 4 месяцев':region==='Санкт-Петербург'?'около 6 месяцев':'4–6 месяцев';}
+			function setField(name,val){var f=root.querySelector('.wpcf7 [name="'+name+'"]');if(f)f.value=val;}
+			function update(){
+				var s=state(),r=range(s.distance),individual=!r.price,
+					priceText=individual?'Требуется индивидуальный расчёт':'Ориентировочно от '+fmt(r.price).replace(' ₽',' руб.');
+				priceWrap.hidden=individual;indiv.hidden=!individual;
+				if(!individual)price.textContent=fmt(r.price);
+				fDist.textContent=r.label;
+				fTerm.textContent=individual?'после расчёта':term(s.region);
+				setField('calc-service','Газификация частного дома');
+				setField('calc-distance',r.label);
+				setField('calc-price',priceText);
+				setField('calc-region',s.region||'не указано');
+				setField('calc-pipe',s.pipe||'не указано');
+				setField('calc-land',s.land||'не указано');
+				setField('calc-tu',s.tu);
+				setField('calc-term',individual?'после расчёта':term(s.region));
+			}
+			root.addEventListener('change',function(e){if(e.target.dataset&&e.target.dataset.key)update();});
+			var wrap=q('.wpcf7');
+			if(wrap){
+				var form=wrap.querySelector('form');
+				// CF7 очищает форму после отправки — возвращаем расчёт в скрытые поля.
+				wrap.addEventListener('wpcf7mailsent',function(){
+					update();
+					var done=document.createElement('div');done.className='gxc__done';
+					done.innerHTML='<strong>Заявка отправлена</strong><p>Специалист свяжется с вами в ближайшее время. Если вы указали e-mail, расчёт придёт на почту.</p><button type="button" class="gxc__again">Отправить ещё одну заявку</button>';
+					form.hidden=true;wrap.appendChild(done);
+					done.querySelector('button').addEventListener('click',function(){done.remove();form.hidden=false;});
+				});
+				wrap.addEventListener('wpcf7reset',function(){setTimeout(update,0);});
+				form.addEventListener('submit',update,true);
+			}
+			update();
+		}
+		function boot(){document.querySelectorAll('.gxc').forEach(init);}
+		if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+	})();
+	</script>
+</body></html>
